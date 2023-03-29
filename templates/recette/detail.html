@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+<!-- -->
+{% load l10n %}
+<!-- load static -->
+{% load static %}
+
+<!-- block content -->
+{% block content %}
+
+<div class="inner-wrapper container">
+  <main class="site-main" id="main">
+    <div class="row">
+      <div class="content-area col-12 col-md-12 col-lg-8 p-5">
+        <div class="post-thumb mb-3">
+          <img src="{{ recipe.recipe_img.url }}" alt="" />
+        </div>
+        <header class="entry-header text-center">
+          <h1 class="entry-title text-center">{{ recipe.title }}</h1>
+          <div class="entry-meta">
+            <span class="entry-author"
+              >Written by <span>{{ recipe.author }} </span></span
+            >
+            <span class="entry-date"
+              >&middot; on {{ recipe.created|date:'d F Y' }}
+            </span>
+            <span class="entry-category"
+              >&middot; in <span>{{ category_name }}</span></span
+            >
+          </div>
+        </header>
+        <div class="entry-content">
+          {{ recipe.description|safe }}
+          <div class="entry-detail">
+            <h3 class="title detail-title">Details</h3>
+            <div class="detail-content">
+              <div class="detail detail-pers">
+                <div class="detail-header">
+                  <i class="bx bx-user icon"></i>
+                  <span>Personne</span>
+                </div>
+                {{ recipe.num_people }}
+              </div>
+              <div class="detail detail-prep">
+                <div class="detail-header">
+                  <i class="bx bxs-bowl-hot icon"></i>
+                  <span>Temps de preparation</span>
+                </div>
+                {{ recipe.time_cook }}
+              </div>
+              <div class="detail detail-cuis">
+                <div class="detail-header">
+                  <span class="material-symbols-outlined icon"> cooking </span>
+                  <span>Temps de cuisson</span>
+                </div>
+                {{ recipe.temps_cuisson }}
+              </div>
+              <div class="detail detail-level">
+                <div class="detail-header">
+                  <span class="material-symbols-outlined icon">
+                    electric_bolt
+                  </span>
+                  <span>Difficulté</span>
+                </div>
+                {{ recipe.get_level_display }}
+              </div>
+            </div>
+          </div>
+          <div class="entry-ingredient">
+            <h3 class="title ingredient-title">Ingredients</h3>
+            <div class="ingredient-content">{{ recipe.ingredient|safe }}</div>
+          </div>
+          <div class="entry-desc">
+            <h3 class="title description-title">Direction</h3>
+            <p>{{ recipe.instruction|safe }}</p>
+          </div>
+
+          <div class="related-recipe mt-3">
+            <h3>Related posts:</h3>
+            <div class="similar-items text-center py-4 px-2">
+              <div class="row">
+                {% for recipe in similar_recipes %}
+
+                <div class="col-6 col-md-6 col-lg-6 px-4 related-recipe">
+                  <a href="{% url 'detail' recipe.id %}">
+                    <img
+                      src="{{ recipe.recipe_img.url }}"
+                      alt=""
+                      class="img_sr"
+                      style="height: 168px"
+                    />
+                    <h5 class="mt-2">{{ recipe.title }}</h5>
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <hr />
+
+          {% for comment in comments %}
+          <div class="comment mb-3 px-4">
+            <div class="comment-user me-3 col-2 text-center">
+              <i class="bx bxs-user-circle"></i>
+            </div>
+            <div class="comment-content ms-3">
+              <span class="comment-name fs-5 fw-bold">{{ comment.name }} </span>
+              <span class="comment-date"
+                >on {{ comment.created|date:'d F Y' }}</span
+              >
+              <p class="comment-body">{{ comment.commentaire }}</p>
+            </div>
+          </div>
+          {% endfor %}
+          <h2 class="text-uppercase mb-3 fw-5 mt-5">Laisser un commentaire</h2>
+          <small class="sm-d"
+            >Votre address e-mail ne sera pas publié, les champ obligatoire sont
+            indiqué avec *
+          </small>
+          <form method="post" class="mt-4">
+            {% csrf_token %}
+            <!--  -->
+            {{ form.as_p }}
+            <!--  -->
+            <input
+              type="submit"
+              class="p-3 submit"
+              value="LAISSER COMMENTAIRE"
+            />
+          </form>
+        </div>
+      </div>
+      <div class="sidebar col-12 col-md-12 col-lg-4"></div>
+    </div>
+  </main>
+</div>
+
+{% endblock content %}
+<!-- end content -->
+
+{% block scripts %} {% endblock scripts %}

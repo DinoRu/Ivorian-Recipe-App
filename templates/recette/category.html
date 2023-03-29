@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<!-- -->
+{% load l10n %}
+<!-- load static -->
+
+{% load static %}
+<!-- block content -->
+{% block content %}
+<div class="container category">
+  <h4>Categories:</h4>
+  <div class="row">
+    {% for recipe in recipes %}
+
+    <div class="col-lg-4 cat-card">
+      <img src="{{ recipe.recipe_img.url }}" alt="" />
+      <div class="cat-content">
+        <h4 class="text-center cat-title py-4">{{ recipe.title }}</h4>
+        <span class="cat-meta cat-date"
+          >{{ recipe.created|date:'d F Y' }} &#183; by
+        </span>
+        <span class="cat-meta cat-author ps-1">{{ recipe.author }} </span>
+        <span class="cat-meta ps-1">
+          &#183; {{ recipe.comments.count }} comments</span
+        >
+        <p>{{ recipe.description|safe|truncatewords:30 }}</p>
+        <div class="link text-center">
+          <a
+            href="{% url 'detail' recipe.id %}"
+            class="btn text-center cat-link"
+            >Voir detail</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

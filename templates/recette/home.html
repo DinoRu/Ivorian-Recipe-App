@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+<!-- Load static -->
+{% load static %}
+<!-- block content -->
+
+{% block content %}
+
+<section class="home" id="home">
+  <div class="container">
+    <div class="row slider">
+      <div class="col-12 col-md-12">
+        <div class="slider-slick">
+          <img src="{% static 'img/goyave.png' %}" alt="" />
+        </div>
+      </div>
+
+      <div class="col-12 col-md-12">
+        <div class="slider-slick">
+          <img src="{% static 'img/ivoire.png' %}" alt="" />
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="slider-slick">
+          <img src="{% static 'img/slider.png' %}" alt="" />
+        </div>
+      </div>
+
+      <div class="col-12 col-md-12 text-center">
+        <div class="slider-slick text-center">
+          <img src="{% static 'img/slider.png' %}" alt="" />
+        </div>
+      </div>
+
+      <div class="col-12 col-md-12">
+        <div class="slider-slick">
+          <img src="{% static 'img/goyave.png' %}" alt="" />
+        </div>
+      </div>
+
+      <div class="col-12 col-md-12">
+        <div class="slider-slick">
+          <img src="{% static 'img/slider.png' %}" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="grid-items">
+        {% for recipe in recipes %}
+        <div class="item">
+          <div class="item-img">
+            <a href="{% url 'detail' recipe.id %}">
+              <img src="{{ recipe.recipe_img.url }}" alt="" />
+            </a>
+          </div>
+          <div class="item-content">
+            <div class="title-link">
+              <a href="{% url 'detail' recipe.id %}">{{ recipe.title }}</a>
+            </div>
+            <div class="desc-link">
+              {{ recipe.description|safe|truncatewords:20}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
